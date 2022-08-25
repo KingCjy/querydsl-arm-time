@@ -22,7 +22,7 @@ import java.time.LocalDateTime;
 import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest
-@Import(TestConfig.class)
+//@Import(TestConfig.class)
 @ActiveProfiles("test")
 class UserRepositoryTest {
 
@@ -57,7 +57,7 @@ class UserRepositoryTest {
         Session session = entityManager.unwrap(Session.class);
 
         session.doWork(connection ->{
-            PreparedStatement preparedStatement = connection.prepareStatement("select * from `user`");
+            PreparedStatement preparedStatement = connection.prepareStatement("select * from \"user\" user0_");
             ResultSet resultSet = preparedStatement.executeQuery();
 
             System.out.println("timestamp now: " + new Timestamp(System.currentTimeMillis()));
