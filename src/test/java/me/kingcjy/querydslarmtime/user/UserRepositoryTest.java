@@ -46,6 +46,7 @@ class UserRepositoryTest {
 
     @Test
     void test() throws ClassNotFoundException, SQLException {
+        entityManager.clear();
         User user = userRepository.findById(1L).get();
         UserDto userDto1 = new UserDto(user.getId(), user.getName(), user.getCreatedAt());
         UserDto userDto2 = jpaQueryFactory.select(Projections.constructor(UserDto.class, QUser.user.id, QUser.user.name, QUser.user.createdAt))
