@@ -54,6 +54,7 @@ class UserRepositoryTest {
         System.out.println("userDto2: " + userDto2);
 
         Session session = entityManager.unwrap(Session.class);
+
         session.doWork(connection ->{
             PreparedStatement preparedStatement = connection.prepareStatement("select * from \"user\" user0_");
             ResultSet resultSet = preparedStatement.executeQuery();
