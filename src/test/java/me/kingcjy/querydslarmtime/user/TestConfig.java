@@ -15,7 +15,7 @@ public class TestConfig {
 
     @Bean(destroyMethod = "stop")
     public MySQLContainer<?> mySQLContainer() {
-        DockerImageName fullImageName = DockerImageName.parse("784015586554.dkr.ecr.ap-northeast-1.amazonaws.com/arm64-mysql:8.0.28").asCompatibleSubstituteFor("mysql");
+        DockerImageName fullImageName = DockerImageName.parse("mysql:5.7").asCompatibleSubstituteFor("mysql");
 
         try {
             var mySQLContainer =
