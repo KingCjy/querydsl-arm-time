@@ -7,6 +7,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
+import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.context.annotation.Import;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.transaction.annotation.Transactional;
@@ -20,7 +21,7 @@ import java.time.LocalDateTime;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-@DataJpaTest
+@SpringBootTest
 @Import(TestConfig.class)
 @ActiveProfiles("test")
 class UserRepositoryTest {
@@ -56,7 +57,7 @@ class UserRepositoryTest {
         Session session = entityManager.unwrap(Session.class);
 
         session.doWork(connection ->{
-            PreparedStatement preparedStatement = connection.prepareStatement("select * from \"user\" user0_");
+            PreparedStatement preparedStatement = connection.prepareStatement("select * from `user`");
             ResultSet resultSet = preparedStatement.executeQuery();
 
             System.out.println("timestamp now: " + new Timestamp(System.currentTimeMillis()));

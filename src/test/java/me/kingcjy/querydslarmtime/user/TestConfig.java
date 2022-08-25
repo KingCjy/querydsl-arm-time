@@ -5,6 +5,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.boot.jdbc.DataSourceBuilder;
 import org.springframework.boot.test.context.TestConfiguration;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Primary;
 import org.testcontainers.containers.MySQLContainer;
 import org.testcontainers.containers.wait.strategy.Wait;
 import org.testcontainers.utility.DockerImageName;
@@ -49,6 +50,7 @@ public class TestConfig {
     }
 
     @Bean
+    @Primary
     public DataSource dataSource(MySQLContainer<?> mySQLContainer) {
         return DataSourceBuilder.create()
                 .url(mySQLContainer.getJdbcUrl())
