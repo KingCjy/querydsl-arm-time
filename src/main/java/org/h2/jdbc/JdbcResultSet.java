@@ -422,8 +422,6 @@ public final class JdbcResultSet extends TraceObject implements ResultSet {
             debugCodeCall("getTimestamp", columnIndex);
             ValueTimestamp value = (ValueTimestamp) get(checkColumnIndex(columnIndex));
             System.out.println("h2 jdbcResultSet: " + value);
-            System.out.println("h2 jdbcResultSet dateValue: " + value.getDateValue());
-            System.out.println("h2 jdbcResultSet timeNanos: " + value.getTimeNanos());
             return LegacyDateTimeUtils.toTimestamp(conn, null, value);
         } catch (Exception e) {
             throw logAndConvert(e);
