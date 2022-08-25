@@ -774,13 +774,13 @@ public abstract class Loader {
 
         applyPostLoadLocks( row, lockModesArray, session );
 
-        return forcedResultTransformer == null
-                ? getResultColumnOrRow( row, queryParameters.getResultTransformer(), resultSet, session )
-                : forcedResultTransformer.transformTuple(
-                getResultRow( row, resultSet, session ),
-                getResultRowAliases()
-        )
-                ;
+        if(forcedResultTransformer == null) {
+            return getResultColumnOrRow( row, queryParameters.getResultTransformer(), resultSet, session );
+        } else {
+            return forcedResultTransformer.transformTuple(
+                    getResultRow( row, resultSet, session ),
+                    getResultRowAliases());
+        }
     }
 
     protected void extractKeysFromResultSet(
@@ -1055,6 +1055,8 @@ public abstract class Loader {
                     returnProxies,
                     forcedResultTransformer
             );
+
+
             results.add( result );
             if ( createSubselects ) {
                 subselectResultKeys.add( keys );
@@ -2868,6 +2870,7 @@ public abstract class Loader {
             result = doQueryAndInitializeNonLazyCollections( session, queryParameters, true, forcedResultTransformer );
 
             for (Object o : result) {
+                var arr = ((Object[]) o);
                 for (Object o1 : ((Object[]) o)) {
                     System.out.println(o1);
                 }
