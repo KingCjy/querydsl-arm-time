@@ -15,6 +15,7 @@ import javax.persistence.PersistenceContext;
 import javax.sql.DataSource;
 
 import java.sql.*;
+import java.time.LocalDateTime;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -47,19 +48,22 @@ class UserRepositoryTest {
                 .from(QUser.user)
                 .fetchOne();
 
-        System.out.println(userDto1);
-        System.out.println(userDto2);
+        System.out.println("userDto1: " + userDto1);
+        System.out.println("userDto2: " + userDto2);
 
         Session session = entityManager.unwrap(Session.class);
         session.doWork(connection ->{
             PreparedStatement preparedStatement = connection.prepareStatement("select * from \"user\" user0_");
             ResultSet resultSet = preparedStatement.executeQuery();
 
+            System.out.println("timestamp now: " + new Timestamp(System.currentTimeMillis()));
+            System.out.println("timestamp now with LocalDateTime: " + Timestamp.valueOf(LocalDateTime.now()));
+
             if(resultSet.next()) {
                 Timestamp timestamp = resultSet.getTimestamp(2);
                 String timestampString = resultSet.getString(2);
                 System.out.println("jdbc driver timestamp: " + timestamp);
-                System.out.println("jdbc driver timestamp string : " + timestampString);
+                System.out.println("jdbc driver timestamp string: " + timestampString);
             }
         });
 
