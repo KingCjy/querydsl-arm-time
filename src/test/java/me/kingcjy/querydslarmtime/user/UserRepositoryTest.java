@@ -57,7 +57,9 @@ class UserRepositoryTest {
 
             if(resultSet.next()) {
                 Timestamp timestamp = resultSet.getTimestamp(2);
+                String timestampString = resultSet.getString(2);
                 System.out.println("jdbc driver timestamp: " + timestamp);
+                System.out.println("jdbc driver timestamp string : " + timestampString);
             }
         });
 
