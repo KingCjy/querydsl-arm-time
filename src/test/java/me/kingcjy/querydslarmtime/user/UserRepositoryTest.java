@@ -1,5 +1,6 @@
 package me.kingcjy.querydslarmtime.user;
 
+import com.querydsl.core.types.Projections;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -27,18 +28,20 @@ class UserRepositoryTest {
     @BeforeEach
     void before() {
         jpaQueryFactory = new JPAQueryFactory(entityManager);
-
         userRepository.save(new User("KingCjy"));
     }
 
     @Test
     void test() {
         User user = userRepository.findById(1L).get();
-        User user2 = jpaQueryFactory.select(QUser.user).from(QUser.user).fetchOne();
+        UserDto userDto1 = new UserDto(user.getId(), user.getName(), user.getCreatedAt());
+        UserDto userDto2 = jpaQueryFactory.select(Projections.constructor(UserDto.class, QUser.user.id, QUser.user.name, QUser.user.createdAt))
+                .from(QUser.user)
+                .fetchOne();
 
-        System.out.println(user);
-        System.out.println(user2);
+        System.out.println(userDto1);
+        System.out.println(userDto2);
 
-        assertSame(user, user2);
+        assertEquals(userDto1, userDto2);
     }
 }
